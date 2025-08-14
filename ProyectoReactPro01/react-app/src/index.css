@@ -1,0 +1,135 @@
+
+html,
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  background-color: #282c34;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: row;
+}
+
+nav {
+  background-color: #363a45;
+  height: 100vh;
+  margin-right: 15px;
+  overflow-y: scroll;
+  text-align: center;
+  width: 250px;
+}
+nav ul {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 0;
+}
+
+nav li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+nav li a {
+  color: white;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+.nav-active {
+  color: seagreen;
+  transition: all 0.3s ease-out;
+}
+
+.react_logo {
+  transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.react_logo:hover {
+  filter: drop-shadow(0 0 12px rgba(0, 174, 255, 0.75))
+    drop-shadow(0 0 24px rgba(0, 174, 255, 0.45));
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .react-logo {
+    transition: none;
+  }
+  .react-logo:hover {
+    transform: none;
+  }
+}
+
+.lazypage1-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 auto;
+  min-height: 60vh;
+  justify-content: flex-start;
+}
+
+.lazypage1-title{
+  color: white;
+  font-size: 3rem;
+  text-align: center;
+}
+
+ .lazypage1-img-container{
+  margin-top: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lazypage1-img{
+  border: 1px solid white;
+}
+
+.lazypage1-buttons{
+  margin-top: 10px;
+  gap: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.dropin{
+  display:inline-flex;
+  gap:.02em;
+}
+
+.dropin span{
+  display:inline-block;
+  opacity:0;
+  transform: translateY(-24px) rotate(-2deg);
+  animation: dropIn .55s cubic-bezier(.2,.7,.2,1.2) forwards;
+
+}
+
+@keyframes dropIn{
+  0%   { opacity:0; transform: translateY(-24px) rotate(-4deg) }
+  80%  { opacity:1; transform: translateY(4px)  rotate(0deg) }
+  100% { opacity:1; transform: translateY(0) }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .dropin span{ animation:none; opacity:1; transform:none }
+}
+
+
