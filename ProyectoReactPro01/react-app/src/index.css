@@ -163,7 +163,7 @@ nav li a {
   margin-bottom: 1rem;
 }
 
-.project-card-company {
+.project-card-tools {
   color: var(--color-secondary);
   font-size: 0.95rem;
   font-weight: 500;
@@ -220,15 +220,36 @@ nav li a {
 }
 
 .lazypage1-img-container {
-
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: red;
   padding: 10px;
   border-radius: var(--radius-lg);
+  overflow: hidden;             
+  z-index: 0;         
+  animation: riseBlur 700ms cubic-bezier(.2,.7,.2,1) both;       
 }
 
+
+.lazypage1-img-container::before {
+  content: "";
+  position: absolute;
+  inset: -12px;              
+  border-radius: inherit;
+ background: linear-gradient(155deg, #020024 0%, red 0%, #ffab00 12%, #e0ff00 24%, #00ff08 36%, #00e4ff 48%, #0005ff 60%, #fe00e7 72%, red 84%, #ffa200 96%) ;
+  background-size: 300% 300%;     
+  filter: blur(8px);
+  z-index: -1;                    
+  animation: rgbShift 6s linear infinite;
+  pointer-events: none;           
+}
+
+
+.lazypage1-img-container > * {
+  position: relative;
+  z-index: 1;
+}
 
 .lazypage1-img {
   border-radius: var(--radius-lg);
@@ -238,8 +259,6 @@ nav li a {
   object-fit: contain;
   display: block;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
-
-  /* Animación existente: NO tocar */
   animation: fadeInUp 1.1s cubic-bezier(0.2, 0.7, 0.2, 1.2) 0.5s both;
 }
 
@@ -256,9 +275,6 @@ nav li a {
   box-sizing: border-box;
   padding: 1rem;
    }
-
-
-
 
 
 /* =========================================================
@@ -337,6 +353,30 @@ nav li a {
   100% {
     transform: rotate(360deg);
   }
+}
+
+@keyframes fadeInUp {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 18.75em 31.25em;
+  }
+  100%{
+    background-position: 0.1em 0.1em;
+  }
+}
+
+@keyframes rgbShift {
+  0%   { background-position:   0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position:   0% 50%; }
+}
+
+@keyframes riseBlur {
+  0%   { opacity: 0; transform: translateY(12px) scale(.98); filter: blur(6px); }
+  60%  { opacity: 1; transform: translateY(0) scale(1);      filter: blur(0);   }
+  100% { opacity: 1; transform: none;                         filter: blur(0);   }
 }
 
 /* =========================================================
