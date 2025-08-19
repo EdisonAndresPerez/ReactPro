@@ -1,50 +1,29 @@
-import andres from '../../../img/andres.jpeg'
+import { PropsCard } from './withCardData'
 import CardDescription from './cardDescription/CardDescription'
 import { CardImg } from './cardImg/CardImg'
 import { CardTitle } from './cardTitle/CardTitle'
 import { CardTools } from './cardTools/CardTools'
 
-//propiedades del componente
-//recibe un objeto card
+// Propiedades del componente
 interface Props {
   card: PropsCard
+  customClassName?: string 
 }
 
-//Estructura de la card
-interface PropsCard {
-  title: string
-  img?: string
-  description: string
-  tools: string
-}
-
-export function withCardData<ComponentProps extends object>(
-  WrappedComponent: React.ComponentType<ComponentProps & { card: PropsCard }>
-) {
-  return function EnhancedComponent(props: ComponentProps) {
-    const cardData: PropsCard = {
-      title: 'primer proyecto',
-      img: andres,
-      description:
-        'Esta es una breve descripción de mi proyecto, donde explico el objetivo principal y las tecnologías utilizadas.',
-      tools: 'React, TypeScript'
-    }
-
-    return <WrappedComponent {...props} card={cardData} />
-  }
-}
-
-export default function ContainerCard({ card }: Props) {
+export default function ContainerCard({ card, customClassName = '' }: Props) {
+  // Combinar clases CSS: base + personalizada
+  const cardClasses = `project-card ${customClassName}`.trim()
+  
   return (
-    <div className='project-card'>
+    <div className={cardClasses}>
       {/* CardTitle  */}
-      <CardTitle title={card.title} />
+      <CardTitle title={card.title} customClassName={`${customClassName}-title`} />
       {/* CardImg  */}
-      <CardImg img={card.img} />
+      <CardImg img={card.img} customClassName={`${customClassName}-img`} />
       {/* CardDescripcion  */}
-      <CardDescription description={card.description} />
+      <CardDescription description={card.description} customClassName={`${customClassName}-desc`} />
       {/* CardTools  */}
-      <CardTools tool={card.tools} />
+      <CardTools tools={card.tools} customClassName={`${customClassName}-tools`} />
     </div>
   )
 }

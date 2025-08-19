@@ -1,13 +1,15 @@
 
 interface Props {
   title: string;
+  customClassName?: string; // Nueva prop opcional
 }
 
-export const CardTitle = ({ title }: Props) => {
-
+export const CardTitle = ({ title, customClassName = '' }: Props) => {
+  // Combinar clases CSS: base + personalizada
+  const titleClasses = `project-card-title ${customClassName}`.trim()
 
   return (
-      <div className="project-card-title">{title}</div>
+      <div className={titleClasses}>{title}</div>
   )
 }
 

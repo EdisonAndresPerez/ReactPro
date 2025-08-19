@@ -1,0 +1,23 @@
+/* =========================================================
+   🎨 LAZYPAGE2 - PÁGINA DE PROYECTOS
+   ========================================================= */
+
+.lazypage2-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+  padding: 2rem;
+  margin: 0 auto;
+  justify-items: center;
+}
+
+.lazypage2-title {
+  color: #ffffff;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}

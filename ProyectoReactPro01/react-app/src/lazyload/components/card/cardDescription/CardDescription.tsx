@@ -3,11 +3,15 @@
 
 interface Props {
   description : string
+  customClassName?: string 
 }
 
-export const CardDescription = ({description}: Props) => {
+export const CardDescription = ({description, customClassName = ''}: Props) => {
+  // Combinar clases CSS: base + personalizada
+  const descClasses = `project-card-desc ${customClassName}`.trim()
+  
   return (
-        <div className='project-card-desc'>{description}</div>
+        <div className={descClasses}>{description}</div>
   )
 }
 

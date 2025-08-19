@@ -1,63 +1,38 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, JSX } from 'react';
 import {
   BrowserRouter,
   Routes,
   NavLink,
   Route,
-  Navigate
+  Navigate,
+  Outlet,
 } from 'react-router-dom';
 import logo from '../logo.svg';
+import type { AppRoute } from './routes';
+import { DEFAULT_ROUTE } from './routes';
 
-// ========================
-// TIPOS E INTERFACES
-// ========================
 
-export interface AppRoute {
-  to: string;
-  path: string;
-  component: React.ComponentType;
-  name: string;
-}
+// --------------------
+// UI de layoutIconLogo
+// --------------------
+const LayoutIcon: React.FC<{ logo: string }> = ({ logo }) => (
+  <img className="react_logo" src={logo} alt="Logo" />
+);
 
-interface LayoutRutasProps {
-  routes: AppRoute[] | undefined;
-}
 
-interface LayoutIconProps {
-  logo: string;
-}
-
-interface NavigationProps {
-  routes: AppRoute[] | undefined;
-}
-
-// ========================
-// COMPONENTES DE LAYOUT
-// ========================
-export const LayoutIcon: React.FC<LayoutIconProps> = ({ logo }) => {
-  return (
-    <img 
-      className="react_logo" 
-      src={logo} 
-      alt="Logo" 
-    />
-  );
-};
-
-export const LayoutRutas: React.FC<LayoutRutasProps> = ({ routes }) => {
-  // Validación para evitar errores si routes es undefined o vacío
-  if (!routes || !Array.isArray(routes) || routes.length === 0) {
-    console.warn('LayoutRutas: No hay rutas disponibles');
-    return <ul className="layout_links"></ul>;
-  }
-
+// -----------------------------------
+// UI: Lista de enlaces de navegación
+// -----------------------------------
+const LayoutRutas: React.FC<{ routes: AppRoute[] }> = ({ routes }) => {
+  if (routes.length === 0) return <ul className="layout_links"></ul>;
   return (
     <ul className="layout_links">
       {routes.map(route => (
-        <li key={route.name}>
+        <li className="layout_link" key={route.name}>
           <NavLink
-            to={route.to}
-            className={({ isActive }) => isActive ? 'nav-active' : ''}
+            to={route.path}
+            className={({ isActive }) => (isActive ? 'nav-active' : '')}
+            end
           >
             {route.name}
           </NavLink>
@@ -67,70 +42,74 @@ export const LayoutRutas: React.FC<LayoutRutasProps> = ({ routes }) => {
   );
 };
 
-export const LoadingFallback: React.FC = () => {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%'
-      }}
-    >
-      <img
-        className="react_logo react_logoCarga"
-        src={logo}
-        alt="Loading..."
-        style={{ 
-          width: '350px', 
-          height: '350px' 
-        }}
-      />
-    </div>
-  );
-};
-// ========================
-// COMPONENTE PRINCIPAL
-// ========================
-export const Navigation: React.FC<NavigationProps> = ({ routes }) => {
-  // Validación principal de routes
-  if (!routes || !Array.isArray(routes) || routes.length === 0) {
+
+// -----------------------------------
+// UI: Pantalla de carga (mientras carga un Lazy Component)
+// -----------------------------------
+const LoadingFallback: React.FC = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+    <img className="react_logo react_logoCarga" src={logo} alt="Loading..." style={{ width: 350, height: 350 }} />
+  </div>
+);
+
+
+
+// -----------------------------------
+// Layout raíz de la aplicación
+// -----------------------------------
+const RootLayout: React.FC<{ routes: AppRoute[] }> = ({ routes }) => (
+  <div className="main-layout">
+    <nav>
+      <LayoutIcon logo={logo} />
+      <p className="layout_title">Especializado en React</p>
+      <LayoutRutas routes={routes} />
+    </nav>
+    <section className="content">
+      <Suspense fallback={<LoadingFallback />}>
+        <Outlet />
+      </Suspense>
+    </section>
+  </div>
+);
+
+// --------------------
+// Navigation principal
+// --------------------
+export const Navigation: React.FC<{ routes: AppRoute[] }> = ({ routes }) => {
+  if (!routes || routes.length === 0) {
     console.error('Navigation: No se han proporcionado rutas válidas');
     return (
       <div className="main-layout">
-        <div style={{ padding: '20px', textAlign: 'center' }}>
+        <div style={{ padding: 20, textAlign: 'center' }}>
           <p>Error: No hay rutas configuradas</p>
         </div>
       </div>
     );
   }
+
+  const firstPath = routes[0]?.path ?? DEFAULT_ROUTE;
+
   return (
     <BrowserRouter>
-      <div className="main-layout">
-        <nav>
-          <LayoutIcon logo={logo} />
-          <p className="layout_title">Especializado en React</p>
-          <LayoutRutas routes={routes} />
-        </nav>
+      <Routes>
+        {/* Layout route */}
+        <Route element={<RootLayout routes={routes} />}>
+          {/* / -> primera ruta */}
+          <Route index element={<Navigate to={firstPath} replace />} />
 
-        <section className="content">
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              {routes.map((route) => (
-                <Route
-                  key={route.name}
-                  path={route.path}
-                  element={<route.component />}
-                />
-              ))}
-              <Route 
-                path="/*" 
-                element={<Navigate to="/lazy1" replace />} 
-              />
-            </Routes>
-          </Suspense>
-        </section>
-      </div>
+          {/* Rutas mapeadas */}
+          {routes.map(route => (
+            <Route
+              key={route.name}
+              path={route.path}
+              element={route.element}
+            />
+          ))}
+
+          {/* Wildcard -> DEFAULT_ROUTE */}
+          <Route path="*" element={<Navigate to={DEFAULT_ROUTE} replace />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 };

@@ -1,0 +1,193 @@
+/* =========================================================
+   🎨 ESTILOS PERSONALIZADOS PARA LAS CARDS
+   ========================================================= */
+
+/* =========================================================
+   🎯 ESTILOS BASE DE LAS CARDS
+   ========================================================= */
+
+/* Card de Proyecto */
+.project-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding: 2rem 1.5rem;
+  margin: 0;
+  max-width: 400px;
+  width: 100%;
+  border: 2px solid #0d6efd;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  /* Estructura mejorada para altura consistente */
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(13, 110, 253, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-color: #6610f2;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #0d6efd, #6610f2);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
+
+/* Título de la card */
+.project-card-title {
+  color: #0d6efd;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+  /* Asegurar que el título no se mueva */
+  flex-shrink: 0;
+}
+
+/* Contenedor de imagen mejorado */
+.img-container {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  overflow: hidden;
+  /* Centrar la imagen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Asegurar que el contenedor mantenga su tamaño */
+  flex-shrink: 0;
+}
+
+/* Imagen de la card */
+.lazypage1-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+.lazypage1-img:hover {
+  transform: scale(1.05);
+}
+
+/* Descripción de la card */
+.project-card-desc {
+  color: #333333;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  /* Permitir que la descripción se expanda */
+  flex: 1;
+}
+
+/* Herramientas de la card */
+.project-card-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  /* Asegurar que las herramientas estén al final */
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Chips de herramientas */
+.tool-chip {
+  color: #333333;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #e7e9fc;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* Variantes por tecnología (además de estilos inline desde el componente) */
+.tool-react { background: #61dafb; color: #001d2b; }
+.tool-javascript { background: #f7df1e; color: #000000; }
+.tool-typescript { background: #3178c6; color: #ffffff; }
+.tool-php { background: #777bb4; color: #ffffff; }
+.tool-redux-toolkit { background: #764abc; color: #ffffff; }
+.tool-html { background: #e34f26; color: #ffffff; }
+.tool-css { background: #1572b6; color: #ffffff; }
+.tool-tailwind-css { background: #38bdf8; color: #0b1220; }
+
+/* =========================================================
+   🎨 VARIANTES DE CARDS
+   ========================================================= */
+
+
+/* Estilos para variantes específicas de imagen con lazypage1 */
+.lazypage1-img.dark-card-img {
+  background-color: red;
+  border: 2px solid #e53e3e;
+}
+
+.lazypage1-img.premium-card-img {
+  background-color: #fbbf24;
+  border: 2px solid #d69e2e;
+}
+
+/* Card premium */
+.project-card.premium-card {
+  border: 2px solid #fbbf24;
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  box-shadow: 0 10px 40px rgba(251, 191, 36, 0.2);
+}
+
+.project-card.premium-card .project-card-title {
+  color: #92400e;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+/* Estilos para elementos específicos de premium */
+.project-card-title.premium-card-title {
+  color: #92400e;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.project-card-desc.premium-card-desc {
+  color: #78350f;
+}
+
+.project-card-tools.premium-card-tools .tool-chip {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fbbf24;
+}
+
+/* Estilos para elementos específicos de dark */
+.project-card-title.dark-card-title {
+  color: #63b3ed;
+}
+
+.project-card-desc.dark-card-desc {
+  color: #e2e8f0;
+}
+
+.project-card-tools.dark-card-tools .tool-chip {
+  background: #4a5568;
+  color: #e2e8f0;
+  border: 1px solid #718096;
+}
